@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void solve(int index,string s,int &maxcount,int currcount,unordered_map<string,int>&umap){
+        if(index>=s.length()){
+            maxcount=max(maxcount,currcount);
+            return;
+        }
+        for(int j=index;j<s.length();j++){
+              string sub=s.substr(index,j-index+1);
+              if(umap.find(sub)==umap.end()){
+                  umap[sub]++;
+                  solve(j+1,s,maxcount,currcount+1,umap);
+                  umap.erase(sub);
+              }
+        }
+    }
+    int maxUniqueSplit(string s) {
+        unordered_map<string,int>umap;
+        int maxcount=0;
+        int currcount=0;
+        solve(0,s,maxcount,currcount,umap);
+        return maxcount;
+    }
+};

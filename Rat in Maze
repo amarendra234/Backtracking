@@ -1,0 +1,40 @@
+
+class Solution {
+  public:
+       
+    void find_all_path(vector<vector<int>>&mat,int i,int j,int row,int col,vector<string>&ans,string str){
+         if(i==row-1 and j==col-1){
+             ans.push_back(str);
+             return;
+         } 
+         if(i<0 or j<0 or i>=row or j>=col or mat[i][j]==0 or mat[i][j]==2){
+             return;
+         }
+         mat[i][j]=2;
+          int x[]={-1,1,0,0};
+          int y[]={0,0,-1,1};
+          string dir="UDLR";
+         for(int k=0;k<4;k++){
+             int lx=i+x[k];
+             int ly=j+y[k];
+             find_all_path(mat,lx,ly,row,col,ans,str+dir[k]);
+         }
+         mat[i][j]=1;
+    }
+    vector<string> findPath(vector<vector<int>> &mat) {
+        // Your code goes here
+        int row=mat.size();
+        int col=mat[0].size();
+        vector<string>ans;
+        if(mat[0][0]==0 or mat[row-1][col-1]==0){
+            return ans;
+        }
+        string str="";
+        find_all_path(mat,0,0,row,col,ans,str);
+        return ans;
+    }
+};
+
+
+
+
